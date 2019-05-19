@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Spiders{% endblock %}
+
+{% block content_title %}{% if search %}Search "{{ search }}"{% else %}Peacock Spider{% endif %}{% endblock %}
+
+{% block data %}
+  <p>
+    Male peacock spiders attract mates through elaborate dances that show off their brilliant colors. The key to those vibrant hues appears to be so-called “superblack” patches on the arachnid’s abdomen. Using an electron microscope and hyperspectral imaging, scientists found that the patches are made up of an array of small, tightly packed bumps called microlenses. These microlenses reflect less than 0.5% of light, thus eliminating any highlights in the black and making the other nearby colors appear far brighter—even glowing.
+  </p>
+{% endblock %}
+
+{% block content %}
+  {% for entry in object_list %}
+    <h3> Comment by:
+      <a href="{% if entry.published %}{{ url_for('detail', slug=entry.slug) }}{% else %}{{ url_for('edit', slug=entry.slug) }}{% endif %}">
+        {{ entry.title }}
+      </a>
+    </h3>
+    <p>
+        {{ entry.content }}
+    </p>
+    <p>Created {{ entry.timestamp.strftime('%m/%d/%Y at %G:%I%p') }}</p>
+  {% else %}
+    <p>No entries have been created yet.</p>
+  {% endfor %}
+  {% include "includes/pagination.html" %}
+{% endblock %}
